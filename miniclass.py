@@ -2,10 +2,31 @@ import requests
 import cv2
 import numpy as np
 import tensorflow as tf
+import numpy as np
+import paho.mqtt.client as mqtt
+import configparser
+
+# Read configuration file
+config = configparser.ConfigParser()
+config.read('config.ini')
+
+# Extract MQTT settings
+mqtt_server = config['MQTT']['server']
+mqtt_port = int(config['MQTT']['port'])
+mqtt_topic = config['MQTT']['topic']
+
+# Extract model path
+model_path = config['Model']['path']
+
+# Extract image URL
+image_url = config['Image']['url']
 
 # Step 1: Fetch the image
-url = 'http://172.25.63.4/current/tmp/image.jpg'
-response = requests.get(url)
+response = requests.get(image_url)
+client = mqtt.Client()
+
+# Connect to the MQTT broker
+client.connect(mqtt_server, mqtt_port, 60)
 
 if response.status_code == 200:
     img_array = np.asarray(bytearray(response.content), dtype="uint8")
@@ -19,7 +40,7 @@ img_resized = cv2.resize(img, (224, 224))  # Resize to fit the model input
 img_normalized = img_resized / 255.0       # Normalize pixel values to [0, 1]
 
 # Step 3: Load the TensorFlow Lite model
-interpreter = tf.lite.Interpreter(model_path='ccsn_cloud_classification_model.tflite')
+interpreter = tf.lite.Interpreter(model_path)
 interpreter.allocate_tensors()
 
 # Get input and output tensors
@@ -64,6 +85,9 @@ if output_data.size > 0:
     if predicted_class.size > 0:
         predicted_cloud = cloud_classes[predicted_class[0]]
         print(f"Predicted Cloud Class: {predicted_cloud}")
+           
+        # Publish the predicted cloud class to the MQTT topic
+        client.publish(mqtt_topic, predicted_cloud)
     else:
         print("No predicted class available.")
 else:
