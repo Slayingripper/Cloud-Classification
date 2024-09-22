@@ -29,7 +29,7 @@ model = models.Sequential([
 model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
 # Load the trained weights (replace 'cloud_model_weights.h5' with your model's weights)
-model.load_weights('cloud_model_weights.h5')
+model.load_weights('ccsn_cloud_classification_model.h5')
 
 # Step 4: Make predictions
 predictions = model.predict(np.expand_dims(img_normalized, axis=0))
