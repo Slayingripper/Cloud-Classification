@@ -14,8 +14,8 @@ This project classifies cloud types from images using a TensorFlow Lite model an
 
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
-   cd <repository-directory>
+   git clone https://github.com/Slayingripper/Cloud-Classification.git
+   cd Cloud-Classification
     ```
 2. Install the required Python packages:
     ```
