@@ -1,5 +1,5 @@
 # Cloud Classification Project
-
+![Cloud Classification](cover.jpeg)
 This project classifies cloud types from images using a TensorFlow Lite model and publishes the results to an MQTT broker. This project is used in conjuction with the CCSN dataset and an ALLSKY camera.
 
 ## Table of Contents
