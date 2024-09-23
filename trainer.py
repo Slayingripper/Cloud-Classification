@@ -8,8 +8,8 @@ from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping, ReduceLRO
 
 
 # Define paths
-train_dir = '/home/minifalcon/Weather/CCSN_v2'  # Update with the path to your CCSN train data
-val_dir = '/home/minifalcon/Weather/CCSN_v2'  # Update with the path to your CCSN validation data
+train_dir = '/home/minifalcon/Weather//home/minifalcon/Weather/CCSN_v2'  # Update with the path to your CCSN train data
+val_dir = 'CCSN_v2'  # Update with the path to your CCSN validation data
 model_save_path = 'ccsn_cloud_model_weights.keras'
 
 
@@ -68,7 +68,7 @@ history = model.fit(
     steps_per_epoch=train_generator.samples // train_generator.batch_size,
     validation_data=val_generator,
     validation_steps=val_generator.samples // val_generator.batch_size,
-    epochs=10,  # Increased epochs for better training
+    epochs=100,  # Increased epochs for better training
     callbacks=[checkpoint, early_stopping, reduce_lr]
 )
 
