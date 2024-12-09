@@ -171,10 +171,10 @@ if predicted_cloud is not None:
                 wind_direction = "Undetermined"
             
             print(f"Inferred Wind Direction (Heuristic): {wind_direction}")
-            # Publish wind direction as well
-            client.publish(mqtt_topic, f"Wind Direction: {wind_direction}")
-            #publish angle as well
-            client.publish(mqtt_topic, f"Angle: {normalized_angle}")
+            # Publish wind direction as well in a separate subtopic
+            # 
+            client.publish(mqtt_topic + "/wind", wind_direction) 
+            client.publish(mqtt_topic + "/wind/angle", normalized_angle)
         else:
             print("No lines detected to estimate wind direction.")
     else:
